@@ -14,5 +14,6 @@ module.exports = {
     'no-console': 'off',
     'linebreak-style': 0,
     'no-use-before-define': 0,
+    'prefer-destructuring': 0,
   },
 };
