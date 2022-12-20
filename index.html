@@ -11,10 +11,69 @@
 <body>
     <header>
         <span><i class="fa-solid fa-paw"></i> myCats</span>
-        <div class="add"><i class="fa-solid fa-square-plus"></i></div>
+        <div data-add class="add">+</div>
     </header>
     <section class="container">
         <div class="container__all-cats" data-wr></div>
     </section>
+
+
+    <div data-modal class="hystmodal">
+        <div class="hystmodal__window">
+            <!-- <template id="modal-add"> -->
+                <div class="head-form">
+                    <h5><i class="fa-solid fa-paw"></i>  Add new cat</h5>
+                    <div data-close-add class="close-add">x</div>
+                </div> 
+                <div class="form">
+                    <form data-form>
+    
+                        <label class="form-group">
+                            Name:
+                            <input type="text" name="name" placeholder="Kevin" required autofocus>
+                        </label>
+                      
+                        <label class="form-group">
+                            Age:
+                            <input type="number" name="age" placeholder="2" required>
+                        </label>
+    
+                        <label class="form-group">
+                            Id:
+                            <input type="number" name="id" placeholder="7" required>
+                        </label>
+                        
+                        <label class="form-group">
+                            Favorite:
+                            <input type="text" name="favorite" placeholder="enter true or false" required>
+                        </label>
+                        
+                        <label class="form-group">
+                            Rate:
+                            <select name="rate" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </label>
+                      
+                        <label class="form-group">
+                            Image:
+                            <input type="text" name="image" placeholder="url" required>
+                        </label>
+    
+                        <label class="form-group">
+                            Description:
+                            <textarea name="description" cols="20" rows="4"></textarea>
+                        </label>
+    
+                        <button type="submit">Add new cat</button>
+                      </form>                  
+                </div>
+            <!-- </template> -->
+        </div>
+    </div>
 </body>
 </html>

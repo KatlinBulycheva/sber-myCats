@@ -29,8 +29,12 @@ body {
     border-radius: 10px;
     height: 300px;
     width: 200px;
-    box-shadow: -10px 10px 20px rgb(125, 115, 125);
+    box-shadow: 0px 5px 10px rgb(125, 115, 125);
     overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: 0px 5px 20px rgb(125, 115, 125);
 }
 
 .card-body {
@@ -81,15 +85,92 @@ header span {
     font-weight: 700;
 }
 
-header span i {
-    color: rgb(188, 72, 167);
-}
-
 .add {
-    font-size: 40px;
+    cursor: pointer;
+    font-size: 60px;
 }
 
 .card-button {
     display: flex;
     justify-content: space-between;
+}
+
+
+
+.hystmodal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 99;
+    padding:30px 0;
+    visibility: hidden;
+    transition: background-color 0.7s ease, backdrop-filter 0.7s ease;
+}
+
+.hystmodal__window {
+    border-radius: 20px;
+    background-color: white;
+    width: 700px;
+    max-width: 100%;
+    padding: 20px 0;
+    transition: transform 0.7s ease;
+}
+
+.hystmodal--active {
+    visibility: visible;
+    background-color: rgba(0, 0, 0, 0.455);
+    backdrop-filter: blur(3px);
+}
+
+.hystmodal--active .hystmodal__window{
+    transform: scale(0.9);
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+form {
+    width: 400px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 0px 10px;
+}
+
+form button {
+    margin: 0 0 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 5px;
+}
+
+.hystmodal__window h5 {
+    margin: 20px 40px;
+}
+
+.head-form {
+    display: flex;
+    justify-content: space-between;
+}
+
+.close-add {
+    font-size: 30px;
+    font-weight: 300;
+    margin: 20px 40px;
+    cursor: pointer;
 }
