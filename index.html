@@ -20,37 +20,37 @@
 
     <div data-modal class="hystmodal">
         <div class="hystmodal__window">
-            <!-- <template id="modal-add"> -->
+            <template id="modal-add-cat">
                 <div class="head-form">
                     <h5><i class="fa-solid fa-paw"></i>  Add new cat</h5>
                     <div data-close-add class="close-add">x</div>
                 </div> 
                 <div class="form">
                     <form data-form>
+
+                        <label class="form-group">
+                            Id:
+                            <input type="number" name="id" placeholder="7" required autofocus>
+                        </label>
     
                         <label class="form-group">
                             Name:
-                            <input type="text" name="name" placeholder="Kevin" required autofocus>
+                            <input type="text" name="name" placeholder="Kevin" required>
                         </label>
                       
                         <label class="form-group">
                             Age:
                             <input type="number" name="age" placeholder="2" required>
                         </label>
-    
-                        <label class="form-group">
-                            Id:
-                            <input type="number" name="id" placeholder="7" required>
-                        </label>
                         
                         <label class="form-group">
                             Favorite:
-                            <input type="text" name="favorite" placeholder="enter true or false" required>
+                            <input type="text" name="favorite" placeholder="true or false">
                         </label>
                         
                         <label class="form-group">
                             Rate:
-                            <select name="rate" required>
+                            <select name="rate">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -61,7 +61,7 @@
                       
                         <label class="form-group">
                             Image:
-                            <input type="text" name="image" placeholder="url" required>
+                            <input type="text" name="image" placeholder="url">
                         </label>
     
                         <label class="form-group">
@@ -72,7 +72,41 @@
                         <button type="submit">Add new cat</button>
                       </form>                  
                 </div>
-            <!-- </template> -->
+            </template>
+            <template id="modal-view-cat">
+                <div class="modal-view">
+                    <div class="head-view">
+                        <div data-name class="modal-name">Name</div>
+                        <div data-close-view class="close-view">x</div>
+                    </div>
+                    <div data-image class="modal-card-img">
+                        <img src="https://i.pinimg.com/736x/e1/4c/ae/e14cae2f0f44121ab4e3506002ba1a55.jpg"/>
+                    </div>
+                    <div class="modal-card-body">
+                        <div class="item-content">
+                            <div class="item-title">Id</div>
+                            <div data-id class="item-body"></div>
+                        </div>
+                        <div class="item-content">
+                            <div class="item-title">Age</div>
+                            <div data-age class="item-body"></div>
+                        </div>
+                        <div class="item-content">
+                            <div class="item-title">Favorite</div>
+                            <div data-favorite class="item-body"></div>
+                        </div>
+                        <div class="item-content">
+                            <div class="item-title">Rate</div>
+                            <div data-rate class="item-body"></div>
+                        </div>
+                        <div class="item-content">
+                            <div class="item-title">Description</div>
+                            <div data-description class="item-body"></div>
+                        </div>
+                        <button>Change</button>
+                    </div>
+                </div>
+            </template>
         </div>
     </div>
 </body>

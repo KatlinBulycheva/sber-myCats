@@ -1,4 +1,10 @@
 const $wr = document.querySelector('[data-wr]');
+const $modal = document.querySelector('[data-modal]');
+const $modalContent = document.querySelector('.hystmodal__window');
+const $templateContentCatAdd = document.getElementById('modal-add-cat');
+const $templateContentCatView = document.getElementById('modal-view-cat');
+
+const arrayOfItemTemplate = [];
 
 const ACTIONS = {
   DETAIL: 'detail',
@@ -6,7 +12,7 @@ const ACTIONS = {
 };
 
 fetch('https://cats.petiteweb.dev/api/single/KatlinBulycheva/show/')
-  .then((res) => res.json())
+  .then((response) => response.json())
   .then((data) => {
     $wr.insertAdjacentHTML('afterbegin', data.map((cat) => getCatHTML(cat)).join(''));
 
@@ -48,15 +54,26 @@ $wr.addEventListener('click', (event) => {
   }
 });
 
+function openModal() {
+  $modal.classList.add('hystmodal--active');
+}
+
+function closeModal() {
+  $modal.classList.remove('hystmodal--active');
+  $modalContent.innerHTML = '';
+}
+
 // Добавление кота
 const $addCat = document.querySelector('[data-add]');
+
 $addCat.addEventListener('click', () => {
-  const $openModal = document.querySelector('[data-modal]');
-  $openModal.classList.add('hystmodal--active');
+  openModal();
+
+  $modalContent.appendChild($templateContentCatAdd.content.cloneNode(true));
 
   const $closeModal = document.querySelector('[data-close-add]');
   $closeModal.addEventListener('click', () => {
-    $openModal.classList.remove('hystmodal--active');
+    closeModal();
   });
 
   const $applicantForm = document.querySelector('[data-form]');
@@ -74,7 +91,7 @@ $addCat.addEventListener('click', () => {
     })
       .then((response) => {
         if (response.status === 200) {
-          $wr.insertAdjacentHTML('beforeend', getCatHTML(resultCat));
+          $wr.insertAdjacentHTML('afterbegin', getCatHTML(resultCat));
         }
       });
   });
@@ -104,4 +121,44 @@ function serializeForm(formNode) {
   });
 
   return objCat;
+}
+
+// Просмотр кота
+$wr.addEventListener('click', (event) => {
+  if (event.target.dataset.action === ACTIONS.DETAIL || event.target.classList.contains('fa-circle-info') === true) {
+    // console.log(event.target);
+
+    const $catWr = event.target.closest('[data-cat-id]');
+    const catId = $catWr.dataset.catId;
+    // console.log(catId);
+
+    fetch(`https://cats.petiteweb.dev/api/single/KatlinBulycheva/show/${catId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+
+        changeItemsView(data);
+        // console.log(arrayOfItemTemplate);
+        $modalContent.appendChild($templateContentCatView.content.cloneNode(true));
+        openModal();
+
+        const $closeModal = document.querySelector('[data-close-view]');
+        $closeModal.addEventListener('click', () => {
+          closeModal();
+        });
+      });
+  }
+});
+
+function changeItemsView(data) {
+  const dataItem = Object.keys(data);
+  for (let i = 0; i < dataItem.length; i++) {
+    if (dataItem[i] === 'image') {
+      arrayOfItemTemplate[i] = $templateContentCatView.content.querySelector(`[data-${dataItem[i]}]`);
+      arrayOfItemTemplate[i].innerHTML = `<img src="${data[dataItem[i]]}">`;
+    } else {
+      arrayOfItemTemplate[i] = $templateContentCatView.content.querySelector(`[data-${dataItem[i]}]`);
+      arrayOfItemTemplate[i].innerHTML = `${data[dataItem[i]]}`;
+    }
+  }
 }

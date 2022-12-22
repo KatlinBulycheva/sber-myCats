@@ -9,26 +9,21 @@ body {
     padding: 60px 0 60px;
     display: flex;
     justify-content: center;
-    /* position: relative; */
 }
 
 .container__all-cats {
     width: max-content;
     height: auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) */
 }
 
 .card {
     background-color: white;
     border-radius: 10px;
-    height: 300px;
-    width: 200px;
+    height: 320px;
+    width: 300px;
     box-shadow: 0px 5px 10px rgb(125, 115, 125);
     overflow: hidden;
 }
@@ -38,25 +33,33 @@ body {
 }
 
 .card-body {
-    margin-top: 20px;
+    margin-top: 10px;
+    padding: 0 10px;
+    height: calc(320px - 60% - 10px);
+    position: relative;
+}
+
+.card-img {
+    width: 100%;
+    height: 60%;
 }
 
 button {
     border-radius: 10px;
     border: none;
-    background-color: rgb(248, 151, 230);
+    background: linear-gradient(to bottom, rgb(242, 232, 246), rgb(183, 139, 175));
     cursor: pointer;
     padding: 10px;
-    margin: 20px 10px;
+    height: 35px;
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
 }
 
 button i {
-    font-size: 20px;
-}
-
-.card-img {
-    width: 100%;
-    height: 50%;
+    font-size: 18px;
 }
 
 .card-img img {
@@ -67,7 +70,7 @@ button i {
 
 h5 {
     font-size: 30px;
-    margin: 0px 10px
+    margin: 0;
 }
 
 header {
@@ -92,11 +95,16 @@ header span {
 
 .card-button {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 
-
+/* Добавление модалки добавления кота */
 .hystmodal {
     position: fixed;
     top: 0;
@@ -111,7 +119,8 @@ header span {
     z-index: 99;
     padding:30px 0;
     visibility: hidden;
-    transition: background-color 0.7s ease, backdrop-filter 0.7s ease;
+    /* visibility: visible; */
+    transition: background-color 1s ease, backdrop-filter 1s ease;
 }
 
 .hystmodal__window {
@@ -119,8 +128,8 @@ header span {
     background-color: white;
     width: 700px;
     max-width: 100%;
-    padding: 20px 0;
-    transition: transform 0.7s ease;
+    transition: transform 1s ease;
+    overflow: hidden;
 }
 
 .hystmodal--active {
@@ -141,22 +150,26 @@ header span {
 }
 
 form {
-    width: 400px;
+    width: 500px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
-    gap: 15px;
+    gap: 13px;
     padding: 0px 10px;
+    font-size: 17px;
 }
 
 form button {
     margin: 0 0 20px;
+    width: 100%;
+    height: auto;
+    font-size: 17px;
 }
 
 .form-group {
     display: flex;
     flex-flow: column nowrap;
-    gap: 5px;
+    gap: 4px;
 }
 
 .hystmodal__window h5 {
@@ -168,9 +181,77 @@ form button {
     justify-content: space-between;
 }
 
-.close-add {
+.close-add, .close-view {
     font-size: 30px;
     font-weight: 300;
     margin: 20px 40px;
     cursor: pointer;
+}
+
+
+/* Добавление модалки просмотра кота */
+.modal-view {
+    width: 100%;
+}
+
+.modal-card-img {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-card-img img {
+    height: 100%;
+    object-fit: contain;
+}
+
+.head-view {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-name {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 20px 40px;
+}
+
+.modal-card-body {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    font-size: 17px;
+}
+
+.item-content, form input, form textarea, form select {
+    background-color: rgb(242, 232, 246);
+    border-radius: 10px;
+    border: none;
+    min-height: 25px;
+}
+
+.item-content {
+    width: 500px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.item-content .item-title {
+    font-weight: 700;
+    padding-left: 20px;
+}
+
+.item-title, .item-body {
+    display: flex;
+    align-items: center;
+}
+
+.modal-card-body button {
+    width: 500px;
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
 }
