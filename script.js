@@ -6,18 +6,13 @@ const $templateContentCatView = document.getElementById('modal-view-cat');
 
 const arrayOfItemTemplate = [];
 
+const KEY_FOR_LS = 'keyCat for LS';
+
 const ACTIONS = {
   DETAIL: 'detail',
   DELETE: 'delete',
+  CHANGE: 'change',
 };
-
-fetch('https://cats.petiteweb.dev/api/single/KatlinBulycheva/show/')
-  .then((response) => response.json())
-  .then((data) => {
-    $wr.insertAdjacentHTML('afterbegin', data.map((cat) => getCatHTML(cat)).join(''));
-
-    // console.log(data);
-  });
 
 function getCatHTML(cat) {
   return `
@@ -29,12 +24,20 @@ function getCatHTML(cat) {
                 <h5>${cat.name}</h5>
                 <div class="card-button">
                   <button data-action='${ACTIONS.DETAIL}'><i class="fa-solid fa-circle-info"></i></button>
-                  <button><i class="fa-solid fa-pen"></i></button>
+                  <button data-action='${ACTIONS.CHANGE}><i class="fa-solid fa-pen"></i></button>
                   <button data-action='${ACTIONS.DELETE}'><i class="fa-solid fa-trash-can"></i></button>
                 </div>
             </div>
     </div> `;
 }
+
+fetch('https://cats.petiteweb.dev/api/single/KatlinBulycheva/show/')
+  .then((response) => response.json())
+  .then((data) => {
+    $wr.insertAdjacentHTML('afterbegin', data.map((cat) => getCatHTML(cat)).join(''));
+
+    // console.log(data);
+  });
 
 $wr.addEventListener('click', (event) => {
   if (event.target.dataset.action === ACTIONS.DELETE || event.target.classList.contains('fa-trash-can') === true) {
@@ -58,9 +61,11 @@ function openModal() {
   $modal.classList.add('hystmodal--active');
 }
 
-function closeModal() {
-  $modal.classList.remove('hystmodal--active');
-  $modalContent.innerHTML = '';
+function closeModal(buttonCloseModal) {
+  buttonCloseModal.addEventListener('click', () => {
+    $modal.classList.remove('hystmodal--active');
+    $modalContent.innerHTML = '';
+  });
 }
 
 // Добавление кота
@@ -71,12 +76,20 @@ $addCat.addEventListener('click', () => {
 
   $modalContent.appendChild($templateContentCatAdd.content.cloneNode(true));
 
-  const $closeModal = document.querySelector('[data-close-add]');
-  $closeModal.addEventListener('click', () => {
-    closeModal();
-  });
+  closeModal(document.querySelector('[data-close-add]'));
+
+  const dataFromLS = localStorage.getItem(KEY_FOR_LS); // тут строка
+  const preparedDataFromLS = dataFromLS && JSON.parse(dataFromLS);
+  // console.log({ preparedDataFromLS });
 
   const $applicantForm = document.querySelector('[data-form]');
+
+  if (preparedDataFromLS) {
+    Object.keys(preparedDataFromLS).forEach((key) => {
+      $applicantForm[key].value = preparedDataFromLS[key];
+    });
+  }
+
   $applicantForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const resultCat = serializeForm($applicantForm);
@@ -94,6 +107,20 @@ $addCat.addEventListener('click', () => {
           $wr.insertAdjacentHTML('afterbegin', getCatHTML(resultCat));
         }
       });
+  });
+
+  $applicantForm.addEventListener('change', () => {
+    const dataOfForm = Object.fromEntries(new FormData($applicantForm).entries());
+    // console.log(dataOfForm);
+    const resultCat = {
+      ...dataOfForm,
+      id: +dataOfForm.id,
+      rate: +dataOfForm.rate,
+      age: +dataOfForm.age,
+      favorite: !!dataOfForm.favorite,
+    };
+
+    localStorage.setItem(KEY_FOR_LS, JSON.stringify(resultCat));
   });
 });
 
@@ -125,7 +152,7 @@ function serializeForm(formNode) {
 
 // Просмотр кота
 $wr.addEventListener('click', (event) => {
-  if (event.target.dataset.action === ACTIONS.DETAIL || event.target.classList.contains('fa-circle-info') === true) {
+  if (event.target.dataset.action === ACTIONS.DETAIL || event.target.classList.contains('fa-circle-info') === true || event.currentTarget === $wr) {
     // console.log(event.target);
 
     const $catWr = event.target.closest('[data-cat-id]');
@@ -142,10 +169,7 @@ $wr.addEventListener('click', (event) => {
         $modalContent.appendChild($templateContentCatView.content.cloneNode(true));
         openModal();
 
-        const $closeModal = document.querySelector('[data-close-view]');
-        $closeModal.addEventListener('click', () => {
-          closeModal();
-        });
+        closeModal(document.querySelector('[data-close-view]'));
       });
   }
 });
